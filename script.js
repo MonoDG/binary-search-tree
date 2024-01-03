@@ -221,6 +221,11 @@ class Tree {
         return output;
     }
 
+    rebalance() {
+        let array = this.inOrder(this.#_root);
+        this.#_root = this.buildTree(array, 0, array.length - 1);
+    }
+
     prettyPrint(node, prefix = "", isLeft = true) {
         if (node === null) return;
         if (node.right !== null)
@@ -285,5 +290,8 @@ console.log(mytree.height(mytree.root)); // 4
 console.log(mytree.depth(mytree.root.right.right)); // 7
 console.log(mytree.isBalanced(mytree.root));
 mytree.insert(9);
+mytree.prettyPrint(mytree.root);
+console.log(mytree.isBalanced(mytree.root));
+mytree.rebalance();
 mytree.prettyPrint(mytree.root);
 console.log(mytree.isBalanced(mytree.root));
