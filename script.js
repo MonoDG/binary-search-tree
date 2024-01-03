@@ -209,6 +209,18 @@ class Tree {
         return this.height(this.root) - this.height(node);
     }
 
+    isBalanced(node) {
+        let output = true;
+        this.preOrder(node, (node) => {
+            let leftHeight = this.height(node.left);
+            let rightHeight = this.height(node.right);
+            if (Math.abs(leftHeight - rightHeight) > 1) {
+                output = false;
+            }
+        });
+        return output;
+    }
+
     prettyPrint(node, prefix = "", isLeft = true) {
         if (node === null) return;
         if (node.right !== null)
@@ -271,3 +283,7 @@ mytree.insert(8);
 mytree.prettyPrint(mytree.root);
 console.log(mytree.height(mytree.root)); // 4
 console.log(mytree.depth(mytree.root.right.right)); // 7
+console.log(mytree.isBalanced(mytree.root));
+mytree.insert(9);
+mytree.prettyPrint(mytree.root);
+console.log(mytree.isBalanced(mytree.root));
