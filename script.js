@@ -81,7 +81,50 @@ class Tree {
         else if (value > lastNode.data) lastNode.right = new Node(value);
     }
 
-    delete(value) {}
+    delete(value) {
+        let currentNode = this.#_root;
+        let lastNode = null;
+        while (currentNode !== null) {
+            if (value === currentNode.data) {
+                if (currentNode.left !== null && currentNode.right !== null) {
+                    let inOrderArrNodes = [];
+                    this.inOrder(currentNode.right, function (node) {
+                        inOrderArrNodes.push(node);
+                    });
+                    let inOrderSuccessor = inOrderArrNodes[0];
+                    let tempCurrentNodeData = inOrderSuccessor.data;
+                    this.delete(inOrderSuccessor.data);
+                    currentNode.data = tempCurrentNodeData;
+                    return;
+                } else if (currentNode.left !== null) {
+                    let tempCurrentNodeData = currentNode.left.data;
+                    this.delete(currentNode.left.data);
+                    currentNode.data = tempCurrentNodeData;
+                    return;
+                } else if (currentNode.right !== null) {
+                    let tempCurrentNodeData = currentNode.right.data;
+                    this.delete(currentNode.right.data);
+                    currentNode.data = tempCurrentNodeData;
+                    return;
+                } else {
+                    if (
+                        lastNode.left &&
+                        lastNode.left.data === currentNode.data
+                    )
+                        lastNode.left = null;
+                    if (
+                        lastNode.right &&
+                        lastNode.right.data === currentNode.data
+                    )
+                        lastNode.right = null;
+                    return;
+                }
+            }
+            lastNode = currentNode;
+            if (value < currentNode.data) currentNode = currentNode.left;
+            else if (value > currentNode.data) currentNode = currentNode.right;
+        }
+    }
 
     find(value) {
         let currentNode = this.#_root;
@@ -205,3 +248,12 @@ mytree.prettyPrint(mytree.root);
 // mytree.prettyPrint(mytree.root);
 
 // console.log(mytree.find(6));
+
+// mytree.delete(2);
+// mytree.prettyPrint(mytree.root);
+// mytree.delete(4);
+// mytree.prettyPrint(mytree.root);
+// mytree.delete(5);
+// mytree.prettyPrint(mytree.root);
+// mytree.delete(0);
+// mytree.prettyPrint(mytree.root);
