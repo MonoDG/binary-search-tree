@@ -205,6 +205,10 @@ class Tree {
         return Math.max(leftTreeHeight, rightTreeHeight) + 1;
     }
 
+    depth(node) {
+        return this.height(this.root) - this.height(node);
+    }
+
     prettyPrint(node, prefix = "", isLeft = true) {
         if (node === null) return;
         if (node.right !== null)
@@ -265,4 +269,5 @@ const mytree = new Tree([1, 2, 3, 4, 5, 6, 7]);
 // mytree.prettyPrint(mytree.root);
 mytree.insert(8);
 mytree.prettyPrint(mytree.root);
-console.log(mytree.height(mytree.root));
+console.log(mytree.height(mytree.root)); // 4
+console.log(mytree.depth(mytree.root.right.right)); // 7
