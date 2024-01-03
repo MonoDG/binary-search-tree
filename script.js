@@ -39,12 +39,25 @@ class Tree {
     #_root;
 
     constructor(array) {
-        this.#_array = array.sort();
+        this.#_array = [...array].sort();
+        this.#_array = this.removeDuplicates(this.#_array);
         this.#_root = this.buildTree(this.#_array, 0, this.#_array.length - 1);
     }
 
     get root() {
         return this.#_root;
+    }
+
+    removeDuplicates(array) {
+        let arrayWithoutDuplicates = [];
+        let lastN = null;
+        array.forEach((n) => {
+            if (n !== lastN) {
+                arrayWithoutDuplicates.push(n);
+                lastN = n;
+            }
+        });
+        return arrayWithoutDuplicates;
     }
 
     buildTree(array, start, end) {
@@ -74,5 +87,5 @@ class Tree {
     }
 }
 
-const mytree = new Tree([2, 5, 6, 1, 0, 4]);
+const mytree = new Tree([2, 2, 5, 6, 1, 1, 0, 4]);
 mytree.prettyPrint(mytree.root);
