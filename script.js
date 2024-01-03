@@ -83,6 +83,16 @@ class Tree {
 
     delete(value) {}
 
+    find(value) {
+        let currentNode = this.#_root;
+        while (currentNode !== null) {
+            if (value === currentNode.data) return currentNode;
+            if (value < currentNode.data) currentNode = currentNode.left;
+            else if (value > currentNode.data) currentNode = currentNode.right;
+        }
+        return null;
+    }
+
     levelOrder(callback = null) {
         let queue = [this.#_root];
         if (callback) {
@@ -187,9 +197,11 @@ mytree.prettyPrint(mytree.root);
 
 // mytree.prettyPrint(mytree.root);
 
-console.log(mytree.postOrder(mytree.root));
-mytree.postOrder(mytree.root, function (node) {
-    node.data = node.data * 2;
-});
+// console.log(mytree.postOrder(mytree.root));
+// mytree.postOrder(mytree.root, function (node) {
+//     node.data = node.data * 2;
+// });
 
-mytree.prettyPrint(mytree.root);
+// mytree.prettyPrint(mytree.root);
+
+// console.log(mytree.find(6));
