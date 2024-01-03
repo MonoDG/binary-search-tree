@@ -133,6 +133,18 @@ class Tree {
         return output;
     }
 
+    postOrder(node, callback = null) {
+        if (node === null) return null;
+        let output = [];
+        let value = this.postOrder(node.left, callback);
+        if (value) output = output.concat(value);
+        value = this.postOrder(node.right, callback);
+        if (value) output = output.concat(value);
+        if (callback) callback(node);
+        else output.push(node.data);
+        return output;
+    }
+
     prettyPrint(node, prefix = "", isLeft = true) {
         if (node === null) return;
         if (node.right !== null)
@@ -168,8 +180,15 @@ mytree.prettyPrint(mytree.root);
 
 // mytree.prettyPrint(mytree.root);
 
-console.log(mytree.preOrder(mytree.root));
-mytree.preOrder(mytree.root, function (node) {
+// console.log(mytree.preOrder(mytree.root));
+// mytree.preOrder(mytree.root, function (node) {
+//     node.data = node.data * 2;
+// });
+
+// mytree.prettyPrint(mytree.root);
+
+console.log(mytree.postOrder(mytree.root));
+mytree.postOrder(mytree.root, function (node) {
     node.data = node.data * 2;
 });
 
