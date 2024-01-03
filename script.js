@@ -39,7 +39,7 @@ class Tree {
     #_root;
 
     constructor(array = []) {
-        this.#_array = this.removeDuplicates([...array].sort());
+        this.#_array = this.removeDuplicates([...array].sort((a, b) => a - b));
         this.#_root = this.buildTree(this.#_array, 0, this.#_array.length - 1);
     }
 
@@ -222,8 +222,10 @@ class Tree {
     }
 
     rebalance() {
-        let array = this.inOrder(this.#_root);
-        this.#_root = this.buildTree(array, 0, array.length - 1);
+        this.#_array = this.removeDuplicates(
+            [...this.inOrder(this.#_root)].sort((a, b) => a - b)
+        );
+        this.#_root = this.buildTree(this.#_array, 0, this.#_array.length - 1);
     }
 
     prettyPrint(node, prefix = "", isLeft = true) {
@@ -244,54 +246,43 @@ class Tree {
     }
 }
 
-const mytree = new Tree([1, 2, 3, 4, 5, 6, 7]);
-// mytree.insert(3);
-// mytree.insert(7);
-// mytree.insert(7);
-// mytree.prettyPrint(mytree.root);
-// console.log(mytree.levelOrder());
-// mytree.levelOrder(function (node) {
-//     console.log(node.data * 2);
-// });
-// console.log(mytree.inOrder(mytree.root));
-// mytree.inOrder(mytree.root, function (node) {
-//     node.data = node.data + "Hello";
-// });
-
-// mytree.prettyPrint(mytree.root);
-
-// console.log(mytree.preOrder(mytree.root));
-// mytree.preOrder(mytree.root, function (node) {
-//     node.data = node.data * 2;
-// });
-
-// mytree.prettyPrint(mytree.root);
-
-// console.log(mytree.postOrder(mytree.root));
-// mytree.postOrder(mytree.root, function (node) {
-//     node.data = node.data * 2;
-// });
-
-// mytree.prettyPrint(mytree.root);
-
-// console.log(mytree.find(6));
-
-// mytree.delete(2);
-// mytree.prettyPrint(mytree.root);
-// mytree.delete(4);
-// mytree.prettyPrint(mytree.root);
-// mytree.delete(5);
-// mytree.prettyPrint(mytree.root);
-// mytree.delete(0);
-// mytree.prettyPrint(mytree.root);
-mytree.insert(8);
-mytree.prettyPrint(mytree.root);
-console.log(mytree.height(mytree.root)); // 4
-console.log(mytree.depth(mytree.root.right.right)); // 7
-console.log(mytree.isBalanced(mytree.root));
-mytree.insert(9);
-mytree.prettyPrint(mytree.root);
-console.log(mytree.isBalanced(mytree.root));
-mytree.rebalance();
-mytree.prettyPrint(mytree.root);
-console.log(mytree.isBalanced(mytree.root));
+// Take it all together
+// 1. Create a binary search tree (BST) from an array of random numbers < 100.
+//    You can create a function that returns an array of random numbers every
+//    time you call it if you wish.
+let myarray = Array(100)
+    .fill()
+    .map((_) => Math.floor(Math.random() * 100));
+let bst = new Tree(myarray);
+// 2. Confirm that the tree is balanced by calling isBalanced.
+console.log(`Is balanced? ${bst.isBalanced(bst.root)}`);
+// 3. Print out all elements in level, pre, post and in order.
+console.log("Level Order");
+console.log(bst.levelOrder());
+console.log("Pre Order");
+console.log(bst.preOrder(bst.root));
+console.log("Post Order");
+console.log(bst.postOrder(bst.root));
+console.log("In Order");
+console.log(bst.inOrder(bst.root));
+// 4. Unbalance the tree by adding several numbers > 100.
+console.log("Adding 105, 202, 154");
+bst.insert(105);
+bst.insert(202);
+bst.insert(154);
+// 5. Confirm that the tree is unbalanced by calling isBalanced.
+console.log(`Is balanced? ${bst.isBalanced(bst.root)}`);
+// 6. Balance the tree by calling rebalance.
+console.log("Balancing tree");
+bst.rebalance();
+// 7. Confirm that the tree is balanced by calling isBalanced.
+console.log(`Is balanced? ${bst.isBalanced(bst.root)}`);
+// 8. Print out all elements in level, pre, post and in order.
+console.log("Level Order");
+console.log(bst.levelOrder());
+console.log("Pre Order");
+console.log(bst.preOrder(bst.root));
+console.log("Post Order");
+console.log(bst.postOrder(bst.root));
+console.log("In Order");
+console.log(bst.inOrder(bst.root));
