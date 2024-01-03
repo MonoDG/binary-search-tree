@@ -83,6 +83,27 @@ class Tree {
 
     delete(value) {}
 
+    levelOrder(callback = null) {
+        let queue = [this.#_root];
+        if (callback) {
+            while (queue.length > 0) {
+                let currentNode = queue.shift();
+                callback(currentNode);
+                if (currentNode.left !== null) queue.push(currentNode.left);
+                if (currentNode.right !== null) queue.push(currentNode.right);
+            }
+        } else {
+            let output = [];
+            while (queue.length > 0) {
+                let currentNode = queue.shift();
+                output.push(currentNode.data);
+                if (currentNode.left !== null) queue.push(currentNode.left);
+                if (currentNode.right !== null) queue.push(currentNode.right);
+            }
+            return output;
+        }
+    }
+
     prettyPrint(node, prefix = "", isLeft = true) {
         if (node === null) return;
         if (node.right !== null)
@@ -107,3 +128,9 @@ mytree.insert(3);
 mytree.insert(7);
 mytree.insert(7);
 mytree.prettyPrint(mytree.root);
+console.log(mytree.levelOrder());
+console.log(
+    mytree.levelOrder(function (node) {
+        console.log(node.data * 2);
+    })
+);
