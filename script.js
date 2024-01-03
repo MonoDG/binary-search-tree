@@ -38,7 +38,7 @@ class Tree {
     #_array;
     #_root;
 
-    constructor(array) {
+    constructor(array = []) {
         this.#_array = this.removeDuplicates([...array].sort());
         this.#_root = this.buildTree(this.#_array, 0, this.#_array.length - 1);
     }
@@ -198,6 +198,13 @@ class Tree {
         return output;
     }
 
+    height(node) {
+        if (node === null) return -1;
+        let leftTreeHeight = this.height(node.left);
+        let rightTreeHeight = this.height(node.right);
+        return Math.max(leftTreeHeight, rightTreeHeight) + 1;
+    }
+
     prettyPrint(node, prefix = "", isLeft = true) {
         if (node === null) return;
         if (node.right !== null)
@@ -216,8 +223,7 @@ class Tree {
     }
 }
 
-const mytree = new Tree([2, 2, 5, 6, 1, 1, 0, 4]);
-mytree.prettyPrint(mytree.root);
+const mytree = new Tree([1, 2, 3, 4, 5, 6, 7]);
 // mytree.insert(3);
 // mytree.insert(7);
 // mytree.insert(7);
@@ -257,3 +263,6 @@ mytree.prettyPrint(mytree.root);
 // mytree.prettyPrint(mytree.root);
 // mytree.delete(0);
 // mytree.prettyPrint(mytree.root);
+mytree.insert(8);
+mytree.prettyPrint(mytree.root);
+console.log(mytree.height(mytree.root));
