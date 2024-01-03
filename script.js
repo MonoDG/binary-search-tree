@@ -254,6 +254,10 @@ let myarray = Array(100)
     .fill()
     .map((_) => Math.floor(Math.random() * 100));
 let bst = new Tree(myarray);
+console.log("Initial Array");
+console.log(myarray);
+console.log("BST");
+bst.prettyPrint(bst.root);
 // 2. Confirm that the tree is balanced by calling isBalanced.
 console.log(`Is balanced? ${bst.isBalanced(bst.root)}`);
 // 3. Print out all elements in level, pre, post and in order.
@@ -270,11 +274,13 @@ console.log("Adding 105, 202, 154");
 bst.insert(105);
 bst.insert(202);
 bst.insert(154);
+bst.prettyPrint(bst.root);
 // 5. Confirm that the tree is unbalanced by calling isBalanced.
 console.log(`Is balanced? ${bst.isBalanced(bst.root)}`);
 // 6. Balance the tree by calling rebalance.
 console.log("Balancing tree");
 bst.rebalance();
+bst.prettyPrint(bst.root);
 // 7. Confirm that the tree is balanced by calling isBalanced.
 console.log(`Is balanced? ${bst.isBalanced(bst.root)}`);
 // 8. Print out all elements in level, pre, post and in order.
