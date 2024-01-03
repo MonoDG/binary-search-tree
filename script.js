@@ -72,6 +72,7 @@ class Tree {
         let currentNode = this.#_root;
         let lastNode = null;
         while (currentNode !== null) {
+            if (value === currentNode.data) break;
             lastNode = currentNode;
             if (value < currentNode.data) currentNode = currentNode.left;
             else if (value > currentNode.data) currentNode = currentNode.right;
@@ -103,5 +104,6 @@ class Tree {
 const mytree = new Tree([2, 2, 5, 6, 1, 1, 0, 4]);
 mytree.prettyPrint(mytree.root);
 mytree.insert(3);
+mytree.insert(7);
 mytree.insert(7);
 mytree.prettyPrint(mytree.root);
