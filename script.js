@@ -39,8 +39,7 @@ class Tree {
     #_root;
 
     constructor(array) {
-        this.#_array = [...array].sort();
-        this.#_array = this.removeDuplicates(this.#_array);
+        this.#_array = this.removeDuplicates([...array].sort());
         this.#_root = this.buildTree(this.#_array, 0, this.#_array.length - 1);
     }
 
@@ -69,6 +68,20 @@ class Tree {
         return root;
     }
 
+    insert(value) {
+        let currentNode = this.#_root;
+        let lastNode = null;
+        while (currentNode !== null) {
+            lastNode = currentNode;
+            if (value < currentNode.data) currentNode = currentNode.left;
+            else if (value > currentNode.data) currentNode = currentNode.right;
+        }
+        if (value < lastNode.data) lastNode.left = new Node(value);
+        else if (value > lastNode.data) lastNode.right = new Node(value);
+    }
+
+    delete(value) {}
+
     prettyPrint(node, prefix = "", isLeft = true) {
         if (node === null) return;
         if (node.right !== null)
@@ -88,4 +101,7 @@ class Tree {
 }
 
 const mytree = new Tree([2, 2, 5, 6, 1, 1, 0, 4]);
+mytree.prettyPrint(mytree.root);
+mytree.insert(3);
+mytree.insert(7);
 mytree.prettyPrint(mytree.root);
