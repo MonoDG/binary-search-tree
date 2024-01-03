@@ -104,6 +104,23 @@ class Tree {
         }
     }
 
+    // TODO levelOrder recursive
+
+    inOrder(node, callback = null) {
+        if (node === null) return null;
+        let output = [];
+        let value = this.inOrder(node.left, callback);
+        if (value) output = output.concat(value);
+        if (callback) {
+            callback(node);
+        } else {
+            output.push(node.data);
+        }
+        value = this.inOrder(node.right, callback);
+        if (value) output = output.concat(value);
+        return output;
+    }
+
     prettyPrint(node, prefix = "", isLeft = true) {
         if (node === null) return;
         if (node.right !== null)
@@ -124,13 +141,17 @@ class Tree {
 
 const mytree = new Tree([2, 2, 5, 6, 1, 1, 0, 4]);
 mytree.prettyPrint(mytree.root);
-mytree.insert(3);
-mytree.insert(7);
-mytree.insert(7);
+// mytree.insert(3);
+// mytree.insert(7);
+// mytree.insert(7);
+// mytree.prettyPrint(mytree.root);
+// console.log(mytree.levelOrder());
+// mytree.levelOrder(function (node) {
+//     console.log(node.data * 2);
+// });
+console.log(mytree.inOrder(mytree.root));
+mytree.inOrder(mytree.root, function (node) {
+    node.data = node.data + "Hello";
+});
+
 mytree.prettyPrint(mytree.root);
-console.log(mytree.levelOrder());
-console.log(
-    mytree.levelOrder(function (node) {
-        console.log(node.data * 2);
-    })
-);
